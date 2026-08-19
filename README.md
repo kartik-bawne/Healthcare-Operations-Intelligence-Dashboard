@@ -788,6 +788,18 @@ A hospital administrator should be able to understand:
 > **What should management investigate or act upon?**
 
 ---
+## 📑 Project Presentation
+
+The complete project presentation is available here:
+
+[📥 View / Download Project Presentation](docs/Development%20of%20a%20Healthcare%20Operations%20Intelligence%20Dashboard%20with%20Decision%20Analytics%20Group%201.pdf)
+
+## 📄 Project Report
+
+The complete project report is available here:
+
+[📥 View / Download Project Report](docs/Healthcare_Intelligence_Report.pdf)
+
 
 # 📌 One-Line Summary
 
