@@ -1,8 +1,3 @@
-Haan, ab maine **tumhara actual GitHub repository** check kar liya. [Your GitHub repository](https://github.com/kartik-bawne/Healthcare-Operations-Intelligence-Dashboard?utm_source=chatgpt.com)
-
-Tumhare current repo mein abhi `Home.py`, `logo.png`, `requirements.txt`, `LICENSE.md` aur `README.md` visible hain; README ka existing structure bhi maine check kiya hai. ([GitHub][1])
-
-Isliye previous README ko generic `hospital_dashboard/` structure ke hisaab se nahi rakhna chahiye. **Tumhare actual repository naming + current project features** ke according ye final version better rahega:
 
 # 🏥 Healthcare Operations Intelligence Dashboard
 
