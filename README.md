@@ -1,200 +1,827 @@
-# Health Care Operation Intelligence Dashboard
+Haan, ab maine **tumhara actual GitHub repository** check kar liya. [Your GitHub repository](https://github.com/kartik-bawne/Healthcare-Operations-Intelligence-Dashboard?utm_source=chatgpt.com)
 
-A production-grade Business Intelligence / Decision Support System that turns
-raw hospital operational data into a secure, real-time, interactive
-dashboard — built with **Python, Pandas, Plotly and Streamlit**.
+Tumhare current repo mein abhi `Home.py`, `logo.png`, `requirements.txt`, `LICENSE.md` aur `README.md` visible hain; README ka existing structure bhi maine check kiya hai. ([GitHub][1])
 
-Raw data (patients, lab, pharmacy, ambulance, staff, appointments, OT,
-emergency) → cleaning → curated KPIs → insight-driven charts → alerts →
-faster, data-driven decisions for hospital administrators.
+Isliye previous README ko generic `hospital_dashboard/` structure ke hisaab se nahi rakhna chahiye. **Tumhare actual repository naming + current project features** ke according ye final version better rahega:
+
+# 🏥 Healthcare Operations Intelligence Dashboard
+
+> **A Python and Streamlit-based Business Intelligence & Decision Support System that transforms hospital operational data into actionable KPIs, interactive analytics, operational alerts, and management insights.**
+
+The **Healthcare Operations Intelligence Dashboard** is an interactive Business Intelligence and Decision Support System developed to provide a centralized view of critical hospital operations.
+
+The system processes operational data related to **patients, laboratory services, pharmacy, ambulance transportation, staff scheduling, appointments, operation theatres, and emergency monitoring**.
+
+It transforms fragmented raw data into **cleaned datasets, decision-grade KPIs, interactive visualizations, operational alerts, trends, and decision-support insights** to help hospital administrators monitor performance and make faster, data-driven decisions.
+
+### Core Workflow
+
+**Raw Hospital Data → Data Cleaning → KPI Calculation → Interactive Dashboard → Alerts & Insights → Decision Support**
 
 ---
 
-## 1. Project structure
+## 📊 Project Overview
 
-```
-hospital_dashboard/
-├── Home.py                          # Login gate + sidebar navigation (entry point)
-├── views/
-│   ├── Overview.py                  # Executive KPIs, alerts, trends, revenue mix
-│   ├── Patient_Overview.py          # Hospital_Visits deep-dive
-│   ├── Laboratory.py                # laboratory data
-│   ├── Pharmacy.py                  # pharmacy data
-│   ├── Ambulance.py                 # Ambulance_Transportation
-│   ├── Staff_Scheduling.py          # Staff_Scheduling
-│   ├── Appointments.py              # Appointments
-│   ├── OT_Dashboard.py              # OT_Dashboard
-│   └── Emergency_Monitoring.py      # ER_Monitoring_Summary
-├── utils/
-│   ├── auth.py                      # Session-based access guard for every page
-│   ├── data_loader.py               # Reads + cleans every sheet (cached)
-│   ├── kpi.py                       # KPI math + alert/"intelligence" rules
-│   └── styling.py                   # Design system: theme, KPI cards, icons, insight charts
+Hospitals generate operational data across multiple departments and functions. When this information is maintained across separate spreadsheets, identifying operational bottlenecks, workload changes, resource utilization, and emerging trends can become difficult.
+
+This project provides a centralized analytics layer that enables administrators to:
+
+* Monitor important hospital operations from a single dashboard
+* Track decision-relevant KPIs
+* Identify operational bottlenecks
+* Analyze patient and admission trends
+* Monitor laboratory performance
+* Analyze pharmacy demand and dispensing patterns
+* Evaluate ambulance response and transportation metrics
+* Monitor staff workload and scheduling
+* Analyze appointment completion, cancellation, and no-show patterns
+* Track operation theatre utilization
+* Monitor emergency department trends
+* Identify potential operational risks
+* Generate plain-language alerts
+* Generate summarized PDF reports
+
+Rather than displaying excessive metrics, each dashboard module focuses on approximately **5–7 decision-relevant KPIs**, supported by interactive visualizations and actionable insights.
+
+---
+
+# 🏗️ Project Structure
+
+```text
+Healthcare-Operations-Intelligence-Dashboard/
+│
+├── Home.py                              # Application entry point + login
+├── logo.png                             # Dashboard branding
+├── README.md                            # Project documentation
+├── requirements.txt                     # Python dependencies
+├── LICENSE.md                            # MIT License
+│
 ├── data/
-│   └── Hospital_Dataset_Complete_Project.xlsx   # Bundled sample dataset
-├── .streamlit/
-│   ├── config.toml                  # Theme + server config
-│   └── secrets.toml.example         # Copy to secrets.toml and set real credentials
-├── requirements.txt
-└── README.md
+│   └── Hospital_Dataset_Complete_Project.xlsx
+│                                         # Bundled sample dataset
+│
+├── utils/
+│   ├── __init__.py
+│   ├── auth.py                           # Authentication & access control
+│   ├── data_loader.py                    # Dataset loading & cleaning
+│   ├── kpi.py                            # KPI calculations & alert rules
+│   ├── pdf_generator.py                  # PDF report generation
+│   └── styling.py                        # Dashboard design system
+│
+├── views/
+│   ├── Overview.py                       # Executive overview
+│   ├── Patient_Overview.py               # Patient analytics
+│   ├── Laboratory.py                     # Laboratory analytics
+│   ├── Pharmacy.py                       # Pharmacy analytics
+│   ├── Ambulance.py                      # Ambulance analytics
+│   ├── Staff_Scheduling.py               # Staff scheduling analytics
+│   ├── Appointments.py                   # Appointment analytics
+│   ├── OT_Dashboard.py                   # Operation theatre analytics
+│   └── Emergency_Monitoring.py            # Emergency monitoring
+│
+└── .streamlit/
+    ├── config.toml                       # Streamlit configuration
+    ├── secrets.toml.example               # Example credentials format
+    └── secrets.toml                      # Local credentials - NOT committed
 ```
 
-## 2. What each page shows
+---
 
-| Page | Source sheet | Highlights |
-|---|---|---|
-| Overview | all sheets | 7 curated executive KPIs, live alerts, trends, revenue mix |
-| Patient Overview | `Hospital_Visits` | Demographics, admissions, billing, satisfaction |
-| Laboratory | `laboratory data` | Test volume, revenue, category mix, technician load |
-| Pharmacy | `pharmacy data` | Sales, category/branch performance, demand intelligence |
-| Ambulance | `Ambulance_Transportation` | Response/travel time, fuel cost, driver workload |
-| Staff Scheduling | `Staff_Scheduling` | Leave rate, overtime, duty types, emergency coverage |
-| Appointments | `Appointments` | Completion/cancellation/no-show rate, peak hours |
-| OT Dashboard | `OT_Dashboard` | Surgery status, room utilization, surgeon workload |
-| Emergency Monitoring | `ER_Monitoring_Summary` | Monthly case trends, category/season heatmap |
+# 📊 Dashboard Modules
 
-Each page is intentionally trimmed to its **5–7 most decision-relevant KPIs**
-(one visually emphasized "hero" metric plus supporting metrics), an
-**Alerts** section that turns raw numbers into plain-language guidance
-(e.g. *"Bed occupancy is at 92% — prepare additional beds"*), and bar charts
-that highlight the single most important bar (max/min) instead of a wall of
-same-colored columns.
+## 1. Executive Overview
 
-> **Note on medicine stock:** the source dataset does not include a live
-> stock-on-hand column, so the Pharmacy page surfaces **dispensing velocity**
-> (fastest-moving medicines) as a practical proxy for reorder alerts instead
-> of a literal stock count.
+The **Overview** page provides an executive-level summary of hospital operations.
 
-## 3. Authentication
+### Features
 
-Sign-in is required before any dashboard page is reachable:
+* Curated executive KPIs
+* Operational alerts
+* Patient trends
+* Revenue trends
+* Department performance
+* Interactive charts
+* Dataset upload functionality
+* Decision-support insights
+* PDF report generation
 
-- `Home.py` shows a login form and only mounts the sidebar navigation after
-  a successful sign-in.
-- `utils/auth.py` adds a second safety net (`require_login()`) on every
-  individual page, in case its direct URL is opened before signing in.
-- Credentials are read from `.streamlit/secrets.toml` (see
-  `secrets.toml.example` for the format) rather than hardcoded in source.
-  **Never commit your real `secrets.toml`** — it is already listed in
-  `.gitignore`.
+The page is designed to answer:
 
-Default demo credentials (set in `secrets.toml.example`):
+> **What is happening across hospital operations, what requires attention, and where should management focus?**
 
-| Username | Password |
-|---|---|
-| `admin` | `admin123` |
-| `doctor` | `hospital2026` |
+---
 
-Change these before deploying to production.
+## 2. Patient Overview
 
-## 4. Run locally
+**Source:** `Hospital_Visits`
 
-**Requirements:** Python 3.10+
+### Key Analytics
+
+* Patient demographics
+* Hospital visits
+* Admissions
+* Billing information
+* Patient satisfaction
+* Operational trends
+
+---
+
+## 3. Laboratory
+
+**Source:** `laboratory data`
+
+### Key Analytics
+
+* Laboratory test volume
+* Revenue
+* Test category distribution
+* Technician workload
+* Laboratory performance
+* Testing trends
+
+---
+
+## 4. Pharmacy
+
+**Source:** `pharmacy data`
+
+### Key Analytics
+
+* Pharmacy sales
+* Medicine categories
+* Branch performance
+* Medicine demand
+* Dispensing trends
+* Demand intelligence
+
+### Medicine Demand Intelligence
+
+The source dataset does **not** contain a live `stock-on-hand` field.
+
+Therefore, the dashboard does not present a fabricated stock count.
+
+Instead, it uses **medicine dispensing velocity as a practical demand indicator/proxy** to identify fast-moving medicines and support demand monitoring and potential reorder decisions.
+
+---
+
+## 5. Ambulance
+
+**Source:** `Ambulance_Transportation`
+
+### Key Analytics
+
+* Ambulance response time
+* Travel time
+* Fuel cost
+* Driver workload
+* Transportation trends
+
+---
+
+## 6. Staff Scheduling
+
+**Source:** `Staff_Scheduling`
+
+### Key Analytics
+
+* Staff workload
+* Leave rate
+* Overtime
+* Duty types
+* Emergency coverage
+* Scheduling trends
+
+---
+
+## 7. Appointments
+
+**Source:** `Appointments`
+
+### Key Analytics
+
+* Completed appointments
+* Cancelled appointments
+* No-show rate
+* Peak appointment hours
+* Appointment trends
+
+---
+
+## 8. Operation Theatre Dashboard
+
+**Source:** `OT_Dashboard`
+
+### Key Analytics
+
+* Surgery status
+* Operation theatre utilization
+* Room utilization
+* Surgeon workload
+* Surgery trends
+
+---
+
+## 9. Emergency Monitoring
+
+**Source:** `ER_Monitoring_Summary`
+
+### Key Analytics
+
+* Emergency case trends
+* Monthly emergency volume
+* Emergency categories
+* Seasonal patterns
+* Heatmap-based analysis
+
+---
+
+# 🚨 Decision-Support Alerts
+
+The dashboard goes beyond displaying raw numbers.
+
+The KPI and intelligence layer converts important operational metrics into **plain-language alerts** that help administrators identify areas requiring attention.
+
+### Example
+
+```text
+Bed occupancy is at 92% — prepare additional beds.
+
+Appointment no-show rate is increasing —
+review appointment confirmation procedures.
+
+Emergency cases are increasing —
+consider additional emergency coverage.
+
+Medicine dispensing velocity is high —
+monitor demand and reorder requirements.
+```
+
+The actual alerts are generated dynamically according to the underlying dataset and KPI rules.
+
+### Decision-Support Flow
+
+**Metric → Threshold/Trend Evaluation → Alert → Recommended Attention**
+
+This transforms the dashboard from a simple visualization tool into an **operational decision-support layer**.
+
+---
+
+# 📈 KPI Intelligence Engine
+
+The centralized KPI and alert logic is implemented through:
+
+```text
+utils/kpi.py
+```
+
+This module handles:
+
+* KPI calculations
+* Threshold evaluation
+* Performance indicators
+* Operational alerts
+* Trend interpretation
+* Decision-support rules
+
+### KPI Design Philosophy
+
+Each dashboard page intentionally focuses on approximately **5–7 decision-relevant KPIs**.
+
+The design uses:
+
+* One visually emphasized **hero KPI**
+* Supporting operational KPIs
+* Interactive charts
+* Contextual alerts
+* Plain-language insights
+
+The objective is to reduce information overload and make important operational signals easier to identify.
+
+---
+
+# 🎨 Design System
+
+The dashboard uses a centralized styling architecture through:
+
+```text
+utils/styling.py
+```
+
+This ensures a consistent visual language across all dashboard modules.
+
+### Design Features
+
+* Professional dashboard layout
+* Gradient page headers
+* KPI cards
+* Alert cards
+* Interactive chart containers
+* Consistent typography
+* Responsive layouts
+* Custom stroke-based icons
+* Highlighted important chart values
+* Consistent filter bars
+* Soft gradient application background
+* Subtle UI animations
+
+### Visualization Philosophy
+
+Charts are designed to emphasize the **most decision-relevant information** rather than displaying a wall of identical visual elements.
+
+Important values can be visually highlighted to help users quickly identify:
+
+* Highest and lowest values
+* Operational bottlenecks
+* Increasing demand
+* Resource pressure
+* Important trends
+
+---
+
+# 🔐 Authentication & Access Control
+
+The dashboard includes authentication to restrict access to hospital operational information.
+
+### Authentication Flow
+
+```text
+Home.py
+   ↓
+Login Interface
+   ↓
+Session Authentication
+   ↓
+Access Validation
+   ↓
+Dashboard Navigation
+```
+
+Authentication is implemented through:
+
+```text
+Home.py
+utils/auth.py
+.streamlit/secrets.toml
+```
+
+`Home.py` handles the login interface, while `utils/auth.py` provides access protection for individual dashboard pages.
+
+This prevents users from simply bypassing the login interface by directly opening an internal dashboard page.
+
+---
+
+## 🔑 Credential Management
+
+Credentials are stored outside the application source code using:
+
+```text
+.streamlit/secrets.toml
+```
+
+The repository should contain only:
+
+```text
+.streamlit/secrets.toml.example
+```
+
+Real credentials must never be committed to GitHub.
+
+### Demo Credentials
+
+For local/project demonstration:
+
+```text
+Username: admin
+Password: admin123
+```
+
+> ⚠️ These credentials are for demonstration purposes only. Change them before any real deployment.
+
+---
+
+# 📄 PDF Report Generation
+
+The project includes a dedicated PDF reporting module:
+
+```text
+utils/pdf_generator.py
+```
+
+The dashboard can generate summarized PDF reports containing important operational information and insights.
+
+Potential uses include:
+
+* Management reporting
+* Operational review meetings
+* Decision-support summaries
+* Offline analysis
+* Documentation of dashboard findings
+
+---
+
+# 📂 Dataset
+
+The project uses a bundled sample hospital dataset:
+
+```text
+data/Hospital_Dataset_Complete_Project.xlsx
+```
+
+The application expects the following worksheet names:
+
+```text
+Hospital_Visits
+laboratory data
+pharmacy data
+Ambulance_Transportation
+Staff_Scheduling
+Appointments
+OT_Dashboard
+ER_Monitoring_Summary
+```
+
+The application supports two approaches:
+
+### Bundled Dataset
+
+The included Excel workbook can be loaded automatically from the `data/` directory.
+
+### Custom Dataset
+
+Users can upload another workbook through the dashboard.
+
+No application code changes are required as long as the replacement workbook follows the expected worksheet and column structure.
+
+---
+
+# 🛠️ Technology Stack
+
+| Technology       | Purpose                                   |
+| ---------------- | ----------------------------------------- |
+| **Python**       | Core programming language                 |
+| **Streamlit**    | Interactive dashboard and web application |
+| **Pandas**       | Data loading, cleaning and analysis       |
+| **Plotly**       | Interactive data visualization            |
+| **OpenPyXL**     | Excel file processing                     |
+| **ReportLab**    | PDF report generation                     |
+| **Git & GitHub** | Version control and project hosting       |
+
+---
+
+# ⚙️ Installation
+
+## Requirements
+
+* Python **3.10+**
+* pip
+* Git
+
+---
+
+## 1. Clone the Repository
 
 ```bash
-# 1. (Recommended) create a virtual environment
+git clone https://github.com/kartik-bawne/Healthcare-Operations-Intelligence-Dashboard.git
+```
+
+Move into the project directory:
+
+```bash
+cd Healthcare-Operations-Intelligence-Dashboard
+```
+
+---
+
+## 2. Create a Virtual Environment
+
+### Windows
+
+```bash
 python -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\activate
+```
 
-# 2. Install dependencies
+Activate:
+
+```bash
+venv\Scripts\activate
+```
+
+### Linux / macOS
+
+```bash
+python3 -m venv venv
+```
+
+Activate:
+
+```bash
+source venv/bin/activate
+```
+
+---
+
+## 3. Install Dependencies
+
+```bash
 pip install -r requirements.txt
+```
 
-# 3. Set up your credentials
+---
+
+# 🔑 Configure Credentials
+
+Create the local secrets file from the example:
+
+### Windows
+
+```bash
+copy .streamlit\secrets.toml.example .streamlit\secrets.toml
+```
+
+### Linux / macOS
+
+```bash
 cp .streamlit/secrets.toml.example .streamlit/secrets.toml
-# then edit .streamlit/secrets.toml with your own username/password pairs
+```
 
-# 4. Run the app
+Then edit:
+
+```text
+.streamlit/secrets.toml
+```
+
+with your own credentials.
+
+> **Important:** Never commit `.streamlit/secrets.toml` to GitHub.
+
+---
+
+# ▶️ Run the Application
+
+Start the application:
+
+```bash
 streamlit run Home.py
 ```
 
-The app opens at **http://localhost:8501**. The bundled Excel file in
-`data/Hospital_Dataset_Complete_Project.xlsx` loads automatically — no setup
-needed. You can also upload a different workbook (same 8 sheet names) from
-the sidebar on the Overview page; every other page will automatically use
-that uploaded data too.
+The application will normally be available at:
 
-## 5. Deploy to Streamlit Community Cloud
-
-1. Push this folder to a **GitHub repository** (keep the `data/` folder in
-   the repo so the sample dataset ships with the app, or remove it and rely
-   purely on the in-app uploader). Do **not** commit `.streamlit/secrets.toml`.
-2. Go to <https://share.streamlit.io/> → **New app**.
-3. Select your repository, branch, and set **Main file path** to `Home.py`.
-4. In the app's **Settings → Secrets**, paste the contents of your local
-   `secrets.toml` (this is how Streamlit Cloud injects `st.secrets`).
-5. Click **Deploy**. Streamlit Cloud installs everything from
-   `requirements.txt` automatically.
-6. Any time you `git push` changes, the deployed app auto-updates.
-
-### Other deployment options
-- **Render / Railway / Fly.io / a VM:** run
-  `streamlit run Home.py --server.port $PORT --server.address 0.0.0.0`
-  and provide `.streamlit/secrets.toml` on the server (or environment-based
-  secrets, per platform).
-- **Docker:**
-  ```dockerfile
-  FROM python:3.11-slim
-  WORKDIR /app
-  COPY . .
-  RUN pip install --no-cache-dir -r requirements.txt
-  EXPOSE 8501
-  CMD ["streamlit", "run", "Home.py", "--server.address=0.0.0.0"]
-  ```
-
-## 6. Using your own hospital data
-
-The app expects an Excel workbook with these **exact sheet names**:
-
-```
-Hospital_Visits, laboratory data, pharmacy data, Ambulance_Transportation,
-Staff_Scheduling, Appointments, OT_Dashboard, ER_Monitoring_Summary
+```text
+http://localhost:8501
 ```
 
-Either replace `data/Hospital_Dataset_Complete_Project.xlsx` with your own
-file (same sheet/column names), or use the **file uploader** in the sidebar
-of the Overview page at runtime — no code changes required.
+### Demo Login
 
-## 7. Design system
-
-`utils/styling.py` is the single source of truth for the look and feel, so
-every page stays visually consistent:
-
-- A hand-built, stroke-based icon set (no emoji, no external icon-font CDN).
-- `page_header()` — the gradient banner at the top of every page.
-- `filter_bar()` — a bordered filter card at the **top of each page** (not
-  the sidebar) so filters are visible without extra clicks, matching the
-  in-page filter pattern used across the dashboard.
-- `render_kpi_cards()` — a clean KPI grid with one visually emphasized
-  "hero" metric and color-coded tone (good / warning / critical).
-- `gradient_bar()` — a bar chart helper that shades every bar along a
-  smooth color scale driven by its own value (darker = higher), so the
-  trend is visible from color alone, not just bar height.
-- `chart_title()` / `section_title()` — consistent headings, used inside
-  `st.container(border=True)` chart cards so every grid stays aligned.
-- Subtle fade-in animations and a soft gradient app background for a
-  polished, non-distracting feel.
-
-## 8. Tech stack
-
-- **Streamlit** — multipage web app / UI framework
-- **Pandas** — Excel ingestion, cleaning, aggregation
-- **Plotly** — interactive charts (line, bar, pie, heatmap)
-- **openpyxl** — Excel engine used by Pandas
-
-## 9. Troubleshooting
-
-| Issue | Fix |
-|---|---|
-| `ModuleNotFoundError` | Run `pip install -r requirements.txt` inside your active environment |
-| Blank/old data after uploading a new file | Refresh the browser tab — Streamlit caches by file content, so a genuinely new file will reload automatically |
-| "No dataset loaded yet" on a sub-page | Open the **Overview** page first (via the sidebar) at least once per session |
-| Login fails with correct-looking credentials | Confirm `.streamlit/secrets.toml` exists and matches the format in `secrets.toml.example` |
-| Port already in use | `streamlit run Home.py --server.port 8502` |
+```text
+Username: admin
+Password: admin123
+```
 
 ---
 
-**One-line summary:** *A Python/Streamlit Business Intelligence system that
-transforms raw hospital operational data into a secure, curated dashboard —
-7-or-fewer decision-grade KPIs per page, insight-highlighted charts, and
-plain-language alerts — helping administrators monitor operations in real
-time and make faster, data-driven decisions.*
+# ☁️ Deployment
+
+The application can be deployed on **Streamlit Community Cloud** or another platform capable of running Streamlit applications.
+
+## Streamlit Community Cloud
+
+1. Push the repository to GitHub.
+2. Open Streamlit Community Cloud.
+3. Select **New App**.
+4. Select this repository.
+5. Select the required branch.
+6. Set the main file to:
+
+```text
+Home.py
+```
+
+7. Configure the required credentials under **Settings → Secrets**.
+8. Deploy the application.
+
+Dependencies are installed using:
+
+```text
+requirements.txt
+```
+
+> Do not upload or commit your local `.streamlit/secrets.toml`.
+
+---
+
+# 🐳 Docker Deployment
+
+A basic Docker deployment can use:
+
+```dockerfile
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY . .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+EXPOSE 8501
+
+CMD ["streamlit", "run", "Home.py", "--server.address=0.0.0.0"]
+```
+
+---
+
+# 🔒 Security Practices
+
+The project follows basic credential-protection practices for a development and demonstration environment.
+
+The following should never be committed:
+
+```text
+venv/
+.venv/
+__pycache__/
+*.pyc
+.env
+.streamlit/secrets.toml
+```
+
+Only the example configuration should be committed:
+
+```text
+.streamlit/secrets.toml.example
+```
+
+Never commit:
+
+* Passwords
+* API keys
+* Authentication tokens
+* Database credentials
+* Private keys
+* Other sensitive information
+
+If real credentials are accidentally pushed to GitHub, they should be considered compromised and **rotated immediately**.
+
+### Production Security Note
+
+This project should be considered a **development/academic decision-support application**, not a production hospital information system.
+
+A real healthcare deployment would require additional controls such as:
+
+* Strong identity and access management
+* Role-based permissions
+* Encryption
+* Secure session management
+* Audit logging
+* Infrastructure security
+* Data privacy controls
+* Applicable healthcare and privacy compliance requirements
+
+---
+
+# 🧪 Troubleshooting
+
+| Problem                     | Solution                                             |
+| --------------------------- | ---------------------------------------------------- |
+| `ModuleNotFoundError`       | Run `pip install -r requirements.txt`                |
+| Login fails                 | Check `.streamlit/secrets.toml`                      |
+| Dataset not loading         | Verify the Excel file and worksheet names            |
+| Blank/old data after upload | Refresh the browser                                  |
+| Port already in use         | Run `streamlit run Home.py --server.port 8502`       |
+| No dataset loaded yet       | Open the Overview page first                         |
+| PDF generation error        | Verify PDF dependencies are installed                |
+| Streamlit deployment fails  | Check `requirements.txt` and Streamlit Cloud Secrets |
+
+---
+
+# 🚀 Future Scope
+
+The current system provides an interactive analytics and decision-support foundation.
+
+Future improvements can include:
+
+### Data & Infrastructure
+
+* Real-time hospital database integration
+* Cloud database connectivity
+* Automated ETL pipelines
+* API-based data ingestion
+* Real-time hospital IoT integration
+
+### Predictive Analytics
+
+* Patient admission forecasting
+* Emergency demand prediction
+* Medicine demand forecasting
+* Staff requirement prediction
+* Advanced anomaly detection
+* Predictive operational analytics
+* Machine-learning-based decision support
+
+### Security & Access
+
+* Role-based access control
+* Department-level permissions
+* Advanced audit logging
+* Enterprise authentication
+
+### Automation
+
+* Automated email reports
+* Scheduled management reports
+* Automated operational alerts
+* Predictive alerting
+
+---
+
+# 🎯 Project Objective
+
+The primary objective of the **Healthcare Operations Intelligence Dashboard** is to transform fragmented hospital operational data into a centralized decision-support system.
+
+Instead of manually analyzing multiple spreadsheets, hospital administrators can monitor critical operational metrics through a single interactive interface and quickly identify:
+
+* Operational bottlenecks
+* Increasing workload
+* Emergency trends
+* Appointment issues
+* Resource utilization
+* Staff workload
+* Pharmacy demand
+* Laboratory performance
+* Patient-related trends
+* Revenue and operational patterns
+
+This enables **faster, clearer, and more data-driven operational decision-making**.
+
+---
+
+# 💡 From Data to Decisions
+
+The central concept of the project is:
+
+```text
+RAW HOSPITAL DATA
+        ↓
+DATA CLEANING
+        ↓
+KPI ENGINE
+        ↓
+ANALYTICS
+        ↓
+INTERACTIVE VISUALIZATION
+        ↓
+ALERT GENERATION
+        ↓
+DECISION SUPPORT
+        ↓
+PDF REPORTING
+```
+
+The objective is not simply to create charts.
+
+The system is designed to bridge the gap between:
+
+**Data → Insight → Action**
+
+A hospital administrator should be able to understand:
+
+> **What is happening?**
+
+> **Where is attention required?**
+
+> **What operational trend is emerging?**
+
+> **What should management investigate or act upon?**
+
+---
+
+# 📌 One-Line Summary
+
+> **A Python and Streamlit Business Intelligence system that transforms hospital operational data into a secure, interactive decision-support dashboard with curated KPIs, intelligent alerts, interactive visualizations, and PDF reporting for faster data-driven healthcare operations.**
+
+---
+
+# 📜 License
+
+This project is licensed under the **MIT License**.
+
+See [`LICENSE.md`](LICENSE.md) for details.
+
+---
+
+# 👨‍💻 Author
+
+**Kartik Bawne**
+
+Healthcare Operations Intelligence Dashboard
+
+Built with:
+
+**Python • Streamlit • Pandas • Plotly • OpenPyXL • ReportLab**
+
+---
+
+## ⭐ Project Focus
+
+**Healthcare Operations • Business Intelligence • Decision Analytics • Data Visualization • Python • Streamlit • Operational Intelligence**
+
+[1]: https://github.com/kartik-bawne/Healthcare-Operations-Intelligence-Dashboard "GitHub - kartik-bawne/Healthcare-Operations-Intelligence-Dashboard: Healthcare Operations Intelligence Dashboard developed during Infosys Springboard Virtual Internship. · GitHub"
