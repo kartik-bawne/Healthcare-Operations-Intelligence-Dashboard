@@ -1,4 +1,3 @@
-
 # 🏥 Healthcare Operations Intelligence Dashboard
 
 > A Python and Streamlit-based Business Intelligence & Decision Support System that transforms hospital operational data into actionable KPIs, interactive analytics, operational alerts, and management insights.
@@ -334,7 +333,7 @@ The actual alerts are generated dynamically according to the underlying dataset 
 
 ---
 
-## KPI Design Philosophy
+## 📈 KPI Design Philosophy
 
 Each dashboard module intentionally focuses on approximately **5–7 decision-relevant KPIs**.
 
@@ -705,7 +704,7 @@ http://localhost:8501
 Username: admin
 Password: admin123
 ```
-
+---
 
 # ☁️ Deployment
 
