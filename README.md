@@ -659,7 +659,7 @@ pip install -r requirements.txt
 
 # 🔑 Configure Credentials
 
-Create the local secrets file from the provided example.
+Create the local secrets file from the example:
 
 ### Windows
 
@@ -679,15 +679,15 @@ Then edit:
 .streamlit/secrets.toml
 ```
 
-and configure the credentials required by the application.
+with your own credentials.
 
-> ⚠️ Never commit `.streamlit/secrets.toml` to GitHub.
+> **Important:** Never commit `.streamlit/secrets.toml` to GitHub.
 
 ---
 
 # ▶️ Run the Application
 
-Start the Streamlit application:
+Start the application:
 
 ```bash
 streamlit run Home.py
@@ -699,9 +699,13 @@ The application will normally be available at:
 http://localhost:8501
 ```
 
-After opening the application, sign in using the credentials configured in `.streamlit/secrets.toml`.
+### Demo Login
 
----
+```text
+Username: admin
+Password: admin123
+```
+
 
 # ☁️ Deployment
 
@@ -828,11 +832,17 @@ The complete project presentation is available here:
 
 [📥 View / Download Project Presentation](docs/Development%20of%20a%20Healthcare%20Operations%20Intelligence%20Dashboard%20with%20Decision%20Analytics%20Group%201.pdf)
 
-## Project Report
+## 📄 Sample Report
 
 The complete project report is available here:
 
-[📄 View / Download Project Report](docs/Healthcare_Intelligence_Report.pdf)
+[📥 View / Download Project Report](docs/Healthcare_Intelligence_Report.pdf)
+
+---
+
+# 📌 One-Line Summary
+
+> **A Python and Streamlit Business Intelligence system that transforms hospital operational data into a secure, interactive decision-support dashboard with curated KPIs, intelligent alerts, interactive visualizations, and PDF reporting for faster data-driven healthcare operations.**
 
 ---
 
