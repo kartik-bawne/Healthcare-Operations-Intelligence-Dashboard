@@ -744,9 +744,9 @@ __pycache__/
 
 Only the example configuration should be committed:
 
-```text
+
 .streamlit/secrets.toml.example
-```
+
 
 Never commit:
 
@@ -852,7 +852,8 @@ Built with:
 
 ---
 
-> **Healthcare Operations • Business Intelligence • Decision Analytics • Data Visualization • Operational Intelligence**
+## ⭐ Project Focus
 
-```
-```
+**Healthcare Operations • Business Intelligence • Decision Analytics • Data Visualization • Python • Streamlit • Operational Intelligence**
+
+[1]: https://github.com/kartik-bawne/Healthcare-Operations-Intelligence-Dashboard "GitHub - kartik-bawne/Healthcare-Operations-Intelligence-Dashboard: Healthcare Operations Intelligence Dashboard developed during Infosys Springboard Virtual Internship. · GitHub"
