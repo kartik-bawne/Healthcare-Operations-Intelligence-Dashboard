@@ -426,7 +426,7 @@ Credentials are stored outside the application source code using:
 .streamlit/secrets.toml
 ```
 
-The repository should contain only the example configuration:
+The repository should contain only:
 
 ```text
 .streamlit/secrets.toml.example
@@ -434,15 +434,16 @@ The repository should contain only the example configuration:
 
 Real credentials must never be committed to GitHub.
 
-### Local demonstration
+### Demo Credentials
 
-Configure the credentials required by the application in:
+For local/project demonstration:
 
 ```text
-.streamlit/secrets.toml
+Username: admin
+Password: admin123
 ```
 
-> ⚠️ Do not use demonstration credentials for a real healthcare deployment.
+> ⚠️ These credentials are for demonstration purposes only. Change them before any real deployment.
 
 ---
 
@@ -527,39 +528,42 @@ No application code changes are required as long as the replacement workbook fol
 The application follows a modular structure separating application entry, authentication, data processing, KPI logic, reporting, styling, and dashboard views.
 
 ```text
+
 Healthcare-Operations-Intelligence-Dashboard/
 │
-├── Home.py
-├── logo.png
-├── README.md
-├── requirements.txt
-├── LICENSE.md
+├── Home.py                              # Application entry point + login
+├── logo.png                             # Dashboard branding
+├── README.md                            # Project documentation
+├── requirements.txt                     # Python dependencies
+├── LICENSE.md                            # MIT License
 │
 ├── data/
 │   └── Hospital_Dataset_Complete_Project.xlsx
+│                                         # Bundled sample dataset
 │
 ├── utils/
 │   ├── __init__.py
-│   ├── auth.py
-│   ├── data_loader.py
-│   ├── kpi.py
-│   ├── pdf_generator.py
-│   └── styling.py
+│   ├── auth.py                           # Authentication & access control
+│   ├── data_loader.py                    # Dataset loading & cleaning
+│   ├── kpi.py                            # KPI calculations & alert rules
+│   ├── pdf_generator.py                  # PDF report generation
+│   └── styling.py                        # Dashboard design system
 │
 ├── views/
-│   ├── Overview.py
-│   ├── Patient_Overview.py
-│   ├── Laboratory.py
-│   ├── Pharmacy.py
-│   ├── Ambulance.py
-│   ├── Staff_Scheduling.py
-│   ├── Appointments.py
-│   ├── OT_Dashboard.py
-│   └── Emergency_Monitoring.py
+│   ├── Overview.py                       # Executive overview
+│   ├── Patient_Overview.py               # Patient analytics
+│   ├── Laboratory.py                     # Laboratory analytics
+│   ├── Pharmacy.py                       # Pharmacy analytics
+│   ├── Ambulance.py                      # Ambulance analytics
+│   ├── Staff_Scheduling.py               # Staff scheduling analytics
+│   ├── Appointments.py                   # Appointment analytics
+│   ├── OT_Dashboard.py                   # Operation theatre analytics
+│   └── Emergency_Monitoring.py            # Emergency monitoring
 │
 └── .streamlit/
-    ├── config.toml
-    └── secrets.toml.example
+    ├── config.toml                       # Streamlit configuration
+    ├── secrets.toml.example               # Example credentials format
+    └── secrets.toml                      # Local credentials - NOT committed
 ```
 
 ### Core responsibilities
@@ -744,9 +748,9 @@ __pycache__/
 
 Only the example configuration should be committed:
 
-
+```text
 .streamlit/secrets.toml.example
-
+```
 
 Never commit:
 
@@ -853,6 +857,7 @@ Built with:
 ---
 
 ## ⭐ Project Focus
+
 
 **Healthcare Operations • Business Intelligence • Decision Analytics • Data Visualization • Python • Streamlit • Operational Intelligence**
 
