@@ -1,3 +1,98 @@
+# 🏥 Healthcare Operations Intelligence Dashboard
+
+> A Python and Streamlit-based Business Intelligence & Decision Support System
+> that transforms hospital operational data into actionable KPIs, interactive
+> analytics, operational alerts, and management insights.
+
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-App-red?logo=streamlit)](https://streamlit.io/)
+[![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-150458?logo=pandas)](https://pandas.pydata.org/)
+[![Plotly](https://img.shields.io/badge/Plotly-Visualization-3F4F75?logo=plotly)](https://plotly.com/)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE.md)
+
+---
+
+## 📸 Product Showcase
+
+### 🔐 Secure Staff Sign-In
+
+<img src="docs/screenshots/01-login.png" alt="Healthcare Operations Intelligence Portal staff sign-in screen" width="100%">
+
+The system begins with an authenticated staff portal designed to restrict access to hospital operational information.
+
+---
+
+### 📊 Executive Operations Dashboard
+
+<img src="docs/screenshots/02-executive-dashboard.png" alt="Healthcare Operations Intelligence Dashboard executive KPI overview" width="100%">
+
+The executive dashboard consolidates hospital-wide KPIs including revenue, bed occupancy, emergency waiting time, readmission rate, patient satisfaction, length of stay, and operation theatre activity.
+
+---
+
+### 🚨 Intelligence & Operational Alerts
+
+<img src="docs/screenshots/03-intelligence-alerts.png" alt="Healthcare Operations Intelligence Dashboard operational alerts and visual analytics" width="100%">
+
+The intelligence layer converts operational metrics into plain-language alerts, helping management identify areas requiring attention.
+
+## 🎯 Why This Project?
+
+Hospitals generate operational data across multiple departments, but
+decision-makers often need to interpret information spread across
+different datasets and workflows.
+
+Healthcare Operations Intelligence Dashboard provides a centralized
+analytics layer that transforms fragmented operational data into:
+
+- 📊 Decision-relevant KPIs
+- 🚨 Operational alerts
+- 📈 Interactive analytics
+- 🏥 Department-level insights
+- 📄 Management-ready PDF reports
+
+### Core Decision Flow
+
+Raw Data
+→ Data Cleaning
+→ KPI Engine
+→ Analytics
+→ Visualization
+→ Alerts
+→ Decision Support
+
+## ⚡ Key Capabilities
+
+| Capability | What it provides |
+|---|---|
+| 📊 Executive KPIs | Hospital-wide operational performance |
+| 🚨 Intelligence & Alerts | Rule-based operational attention signals |
+| 👥 Patient Analytics | Visits, admissions, demographics & satisfaction |
+| 🧪 Laboratory Analytics | Test volume, revenue & workload |
+| 💊 Pharmacy Intelligence | Sales, demand & dispensing trends |
+| 🚑 Ambulance Analytics | Response, travel & fuel metrics |
+| 👨‍⚕️ Staff Scheduling | Workload, overtime & emergency coverage |
+| 📅 Appointment Analytics | Completion, cancellation & no-show patterns |
+| 🏥 OT Analytics | Surgery and theatre utilization |
+| 🚨 Emergency Monitoring | Emergency volume and seasonal patterns |
+| 📄 PDF Reporting | Management-ready operational summaries |
+
+## 📌 Project at a Glance
+
+| Category | Details |
+|---|---|
+| Domain | Healthcare Operations & Business Intelligence |
+| Application | Decision Support Dashboard |
+| Frontend | Streamlit |
+| Language | Python |
+| Data Processing | Pandas, OpenPyXL |
+| Visualization | Plotly |
+| Reporting | ReportLab |
+| Authentication | Streamlit Session + Secrets |
+| Input | Excel / Hospital Operational Dataset |
+| Output | KPIs, Analytics, Alerts & PDF Reports |
+| License | MIT |
+
 
 # 🏥 Healthcare Operations Intelligence Dashboard
 
