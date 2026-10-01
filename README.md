@@ -1,4 +1,4 @@
-````markdown
+
 # 🏥 Healthcare Operations Intelligence Dashboard
 
 > A Python and Streamlit-based Business Intelligence & Decision Support System that transforms hospital operational data into actionable KPIs, interactive analytics, operational alerts, and management insights.
